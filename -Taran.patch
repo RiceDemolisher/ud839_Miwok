@@ -1,0 +1,86 @@
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision 1348b343caa5db00670d417e3639b85a1cbcb746)
++++ app/build.gradle	(date 1551426923107)
+@@ -2,7 +2,6 @@
+ 
+ android {
+     compileSdkVersion 23
+-    buildToolsVersion '27.0.3'
+ 
+     defaultConfig {
+         applicationId "com.example.android.miwok"
+@@ -21,9 +20,9 @@
+ 
+ 
+ dependencies {
+-    compile fileTree(dir: 'libs', include: ['*.jar'])	
+-    testCompile 'junit:junit:4.12'	
+-    compile 'com.android.support:appcompat-v7:23.3.0'	
+-    compile 'com.android.support:support-v4:23.3.0'
+-    compile 'com.android.support:design:23.3.0'
++    implementation fileTree(dir: 'libs', include: ['*.jar'])
++
++    implementation 'com.android.support:appcompat-v7:23.3.0'
++    implementation 'com.android.support:support-v4:23.3.0'
++    implementation 'com.android.support:design:23.3.0'
+ }
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- build.gradle	(revision 1348b343caa5db00670d417e3639b85a1cbcb746)
++++ build.gradle	(date 1551427074550)
+@@ -3,21 +3,22 @@
+ buildscript {
+     repositories {
+         jcenter()
++        google()  //导入旧版本项目时，一般来说该处依赖会在更改classpath中gradle版本是自动添加
+     }
+     dependencies {
+-        classpath 'com.android.tools.build:gradle:2.1.0'
+-
+-        // NOTE: Do not place your application dependencies here; they belong
+-        // in the individual module build.gradle files
++        classpath 'com.android.tools.build:gradle:3.3.1'
++        classpath 'com.google.gms:google-services:3.0.0'
+     }
+ }
+ 
+ allprojects {
+     repositories {
++        /*
++         解决报错：Could not find com.android.tools.build:aapt2:3.3.0-5013011.
++         Beginning with Android Studio 3.2 Canary 11, the source for AAPT2 (Android Asset Packaging Tool 2) is Google's Maven repository.
++         To use AAPT2, make sure that you have a google() dependency in your build.gradle file, as shown here:
++         */
++        google() //但是此处不会，需要自主添加
+         jcenter()
+     }
+-}
+-
+-task clean(type: Delete) {
+-    delete rootProject.buildDir
+-}
++}
+\ No newline at end of file
+Index: gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1252
+===================================================================
+--- gradle/wrapper/gradle-wrapper.properties	(revision 1348b343caa5db00670d417e3639b85a1cbcb746)
++++ gradle/wrapper/gradle-wrapper.properties	(date 1551426096163)
+@@ -1,6 +1,6 @@
+-#Mon Dec 28 10:00:20 PST 2015
++#Fri Mar 01 08:41:36 CET 2019
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-2.10-all.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-4.10.1-all.zip
